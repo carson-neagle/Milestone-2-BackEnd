@@ -20,6 +20,5 @@ const PORT = process.env.PORT || 3000;
 const routes = require("./server/routes/recipeRoutes.js");
 const router = require("./server/routes/recipeRoutes.js");
 app.use("/", routes);
-module.exports = router;
 
 app.listen(port, () => console.log(`listening on port ${port}`));
