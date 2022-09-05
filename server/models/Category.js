@@ -5,6 +5,11 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: "this field is required.",
   },
+  mealType: {
+    type: String,
+    required: "this field is required.",
+  },
+
   image: {
     type: String,
     required: "this field is required.",
