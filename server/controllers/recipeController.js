@@ -9,6 +9,28 @@ exports.homepage = async (req, res) => {
   res.render("index");
 };
 
+exports.exploreRecipe = async(req, res) => {
+  try {
+    let recipeId = req.params.id;
+    const recipe = await Recipe.findById(recipeId);
+    res.render('recipe', { title: 'Cooking Blog - Recipe', recipe } );
+  } catch (error) {
+    res.satus(500).send({message: error.message || "Error Occured" });
+  }
+} 
+
+
+exports.searchRecipe = async(req, res) => {
+  try {
+    let searchTerm = req.body.searchTerm;
+    let recipe = await Recipe.find( { $text: { $search: searchTerm, $diacriticSensitive: true } });
+    res.render('search', { title: 'Cooking Blog - Search', recipe } );
+  } catch (error) {
+    res.satus(500).send({message: error.message || "Error Occured" });
+  }
+  
+}
+
 async function insertRecipeCategoryData() {
   try {
     await Category.insertMany([
