@@ -31,6 +31,16 @@ exports.searchRecipe = async(req, res) => {
   
 }
 
+exports.exploreCategories = async(req, res) => {
+  try {
+    const limitNumber = 20;
+    const categories = await Category.find({}).limit(limitNumber);
+    res.render('categories', { title: 'Cooking Blog - Categoreis', categories } );
+  } catch (error) {
+    res.satus(500).send({message: error.message || "Error Occured" });
+  }
+} 
+
 async function insertRecipeCategoryData() {
   try {
     await Category.insertMany([
