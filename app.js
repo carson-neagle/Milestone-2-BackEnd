@@ -6,7 +6,7 @@ require("dotenv").config();
 
 //Initialize the app object
 const app = express();
-const port = process.env.PORT || 5050;
+const port = process.env.PORT || 3000;
 
 // middleware
 app.use(express.json());
@@ -15,7 +15,7 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 3000;
 
 // routes
 const routes = require("./server/routes/recipeRoutes.js");

@@ -5,7 +5,7 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: "this field is required.",
   },
-  mealType: {
+  type: {
     type: String,
     required: "this field is required.",
   },
