@@ -15,3 +15,7 @@ const PORT = process.env.PORT || 3000;
 app.use("/recipe", routes);
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+
+//controllers
+app.use(recipeController);
+app.use(ingredientsController);

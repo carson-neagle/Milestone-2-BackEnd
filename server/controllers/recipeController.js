@@ -1,17 +1,29 @@
+const { tryEach } = require("async");
+const { db } = require("../models/Category");
 const Category = require("../models/Category");
+const Recipe = require("../models/Recipe");
+const router = require("../routes/recipeRoutes");
 
 require("../models/database");
 /**
  * GET /
  * HomePage
  */
-exports.homepage = async (req, res) => {};
+exports.homepage = async (req, res) => {
+  try {
+    const limitNumber = 10;
+    const catagories = await Category.find({}).limit(limitNumber);
+    res.render("/", { title: "ATTCK Recipes™", catagories });
+  } catch (error) {
+    res.status(500).send({ message: error.message || "Error Occured" });
+  }
+};
 
 exports.exploreRecipe = async (req, res) => {
   try {
     let recipeId = req.params.id;
     const recipe = await Recipe.findById(recipeId);
-    res.render("recipe", { title: "Cooking Blog - Recipe", recipe });
+    res.render("recipe", { title: "ATTCK Recipes™", recipe });
   } catch (error) {
     res.satus(500).send({ message: error.message || "Error Occured" });
   }
@@ -23,7 +35,7 @@ exports.searchRecipe = async (req, res) => {
     let recipe = await Recipe.find({
       $text: { $search: searchTerm, $diacriticSensitive: true },
     });
-    res.render("search", { title: "Cooking Blog - Search", recipe });
+    res.render("search", { title: "ATTCK Recipes™", recipe });
   } catch (error) {
     res.satus(500).send({ message: error.message || "Error Occured" });
   }
@@ -34,7 +46,7 @@ exports.exploreCategories = async (req, res) => {
     const limitNumber = 20;
     const categories = await Category.find({}).limit(limitNumber);
     res.render("categories", {
-      title: "Cooking Blog - Categoreis",
+      title: "ATTCK Recipes™",
       categories,
     });
   } catch (error) {
@@ -42,7 +54,31 @@ exports.exploreCategories = async (req, res) => {
   }
 };
 
-exports.insertRecipeCategoryData = async (req, res) => {
+//**Failing update and delete controller */
+
+/**router.put("/recipe/:id", (req, res) => {
+  db.Recipe.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      res.redirect("'/'${req.params.id}");
+    })
+    .catch((err) => {
+      res.render("error404");
+    });
+});
+
+router.delete("/recipe/:id", (req, res) => {
+  db.Recipe.findByIdAndDelete(req.params.id)
+    .then((recipe) => {
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log("err", err);
+      res.render("error404");
+    });
+});
+*/
+
+/**exports.insertRecipeCategoryData = async (req, res) => {
   try {
     await Category.insertMany([
       {
@@ -112,3 +148,4 @@ exports.insertRecipeCategoryData = async (req, res) => {
     res.send("error");
   }
 };
+*/

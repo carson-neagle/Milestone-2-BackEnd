@@ -1,6 +1,6 @@
 const Recipe = require("../models/Recipe");
 require("../models/database");
-exports.insertIngredientData = async (req, res) => {
+/**exports.insertIngredientData = async (req, res) => {
   try {
     await Recipe.insertMany([
       {
@@ -279,3 +279,4 @@ exports.insertIngredientData = async (req, res) => {
     res.send("error");
   }
 };
+*/

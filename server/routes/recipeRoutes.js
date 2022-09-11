@@ -9,4 +9,6 @@ router.post("/search", recipeController.searchRecipe);
 router.get("/categories", recipeController.exploreCategories);
 router.get("/seed", recipeController.insertRecipeCategoryData);
 router.get("/ingredients", ingredientsController.insertIngredientData);
+router.put("/update", recipeController.updateRecipe);
+router.delete("/delete", recipeController.Recipe);
 module.exports = router;
