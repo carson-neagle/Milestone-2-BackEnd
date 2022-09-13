@@ -1,4 +1,4 @@
-const db = require("../models/Recipe");
+const db = require("../models/Recipes");
 require("../models/database");
 
 db.Recipe.create([
