@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const places = require("../models/recipes")
 
-router.post('/', (req, res) => {
+exports.homepage = async(req, res) => {
     console.log(req.body)
     if (!req.body.pic) {
         // Default image if one is not provided
@@ -15,19 +15,19 @@ router.post('/', (req, res) => {
     }
     places.push(req.body)
     res.redirect('/recipes')
-})
+}
 
 
-router.get('/', (req, res) => {
+exports.homepage = async(req, res) => {
     res.render('recipes/index', { recipes })
-})
+};
 
 
-router.get('/new', (req, res) => {
+exports.newRecipe = async(req, res) => {
     res.render('recipes/new')
-});
+};
 
-router.get('/:id', (req, res) => {
+exports.getRecipeById = async(req, res) => {
     let id = Number(req.params.id)
     if (isNaN(id)) {
         res.render('error404')
@@ -36,9 +36,9 @@ router.get('/:id', (req, res) => {
     } else {
         res.render('recipes/show', { recipe: recipes[id], id })
     }
-})
+};
 
-router.delete('/recipes/:id', (req, res) => {
+exports.deleteRecipe = async(req, res) => {
     let id = Number(req.params.id)
     if (isNaN(id)) {
         res.render('error404')
@@ -48,6 +48,26 @@ router.delete('/recipes/:id', (req, res) => {
         recipes.splice(i, 1)
         res.redirect('/recipes')
     }
-})
+};
+
+exports.updateRecipe = async(req,res) => {
+    try {
+        const recipes = await recipes.findById(req.params.id);
+        if(!recipes) {
+          return next(new AppError('No recipes found with that ID', 404));
+        }
+    
+        res.render('edit', {
+          name: name,
+          type: type,
+          ingredients: ingredients,
+          category: category,
+          instructions, instructions,
+        });
+      }
+      catch(err) {
+        res.status(404).render('error')
+      }
+}
 
 module.exports = router
