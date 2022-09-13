@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const categorySchema = new mongoose.Schema({
+const recipeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: "This field is required",
@@ -29,4 +29,4 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("Recipe", recipeSchema);

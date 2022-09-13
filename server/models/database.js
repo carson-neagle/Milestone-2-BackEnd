@@ -16,4 +16,4 @@ db.once("open", function () {
 });
 
 //models
-module.exports.Category = require("./Category");
+module.exports.Category = require("./Recipe");
