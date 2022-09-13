@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const places = require("../models/Recipes");
 
-exports.homepage = async (req, res) => {
+exports.createRecipe = async (req, res) => {
   console.log(req.body);
   if (!req.body.pic) {
     // Default image if one is not provided

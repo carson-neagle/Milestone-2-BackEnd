@@ -15,7 +15,6 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 const PORT = process.env.PORT || 5050;
 // routes
-const routes = require("./server/routes/recipeRoutes.js");
-app.use("/", routes);
+app.use("/recipes", require('./server/controllers/recipeController'));
 
 app.listen(port, () => console.log(`listening on port ${port}`));
