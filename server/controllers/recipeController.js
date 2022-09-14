@@ -1,71 +1,69 @@
 const router = require("express").Router();
-const places = require("../models/Recipes");
+const Recipe = require("../models/recipes");
 
-exports.createRecipe = async (req, res) => {
-  console.log(req.body);
-  if (!req.body.pic) {
-    // Default image if one is not provided
-    req.body.pic = "http://placekitten.com/400/400";
-  }
-  if (!req.body.ingredients) {
-    req.body.ingredients = "Ingredients";
-  }
-  if (!req.body.instructions) {
-    req.body.instructions = "Instructions";
-  }
-  places.push(req.body);
-  res.redirect("/recipes");
-};
 
 exports.homepage = async (req, res) => {
-  res.render("recipes/index", { recipes });
-};
+    try {
+        const recipes = await Recipe.find().populate('recipes')
 
-exports.newRecipe = async (req, res) => {
-  res.render("recipes/new");
-};
+        res.json(recipes)
+    } catch (error) {
+        res.status(500).json({ "message": String(error) })
+    }
+}
 
 exports.getRecipeById = async (req, res) => {
-  let id = Number(req.params.id);
-  if (isNaN(id)) {
-    res.render("error404");
-  } else if (!recipes[id]) {
-    res.render("error404");
-  } else {
-    res.render("recipes/show", { recipe: recipes[id], id });
-  }
-};
+    try {
+        const { _id } = req.params
+        const recipe = await Recipe.findOne({ _id })
 
-exports.deleteRecipe = async (req, res) => {
-  let id = Number(req.params.id);
-  if (isNaN(id)) {
-    res.render("error404");
-  } else if (!places[id]) {
-    res.render("error404");
-  } else {
-    recipes.splice(i, 1);
-    res.redirect("/recipes");
-  }
-};
-
-exports.updateRecipe = async (req, res) => {
-  try {
-    const recipes = await recipes.findById(req.params.id);
-    if (!recipes) {
-      return next(new AppError("No recipes found with that ID", 404));
+        res.json(recipe)
+    } catch (error) {
+        res.status(500).json({ "message": String(error) })
     }
+}
 
-    res.render("edit", {
-      name: name,
-      type: type,
-      ingredients: ingredients,
-      category: category,
-      instructions,
-      instructions,
-    });
-  } catch (err) {
-    res.status(404).render("error");
-  }
-};
+exports.deleteRecipeById = async (req, res) => {
+    try {
+        const { id } = req.params
+        const recipe = await Recipe.findOneAndDelete({ _id: id })
+        
+        res.json(recipe)
+    } catch (error) {
+        res.status(500).json({ "message": String(error) })
+    }
+}
+
+exports.createRecipe = async (req, res) => {
+    try {
+        const { name, type, ingredients, category, instructions} = req.body
+        const createdRecipe = await new Recipe({
+            name,
+            type,
+            ingredients,
+            category,
+            instructions,
+        }).save()
+
+        res.json({ 'message': 'recipe created' })
+    } catch (error) {
+        res.status(400).json({ "message": String(error) })
+    }
+}
+
+exports.updateRecipe = async(req, res) => {
+    try {
+        const { recipeId } = req.body
+        const { id } = req.params 
+
+        const recipe = await Recipe.findById(id)
+        recipe.newRecipe.push(RecipeId)
+        let updatedRecipe = await Recipe.findByIdAndUpdate(id, recipe)
+
+        res.send(updatedRecipe)
+    } catch (error) {
+        res.status(500).json({ 'message': 'unable to add recipe' })
+    }
+}
 
 module.exports = router;

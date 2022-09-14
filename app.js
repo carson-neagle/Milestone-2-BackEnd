@@ -1,7 +1,6 @@
 //Dependencies
 const express = require("express");
 const mongoose = require("mongoose");
-const expressLayouts = require("express-ejs-layouts");
 require("dotenv").config();
 
 //Initialize the app object
@@ -11,19 +10,15 @@ const port = process.env.PORT || 5050;
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.set("view engine", "ejs");
-const PORT = process.env.PORT || 5050;
 
-// routes & controllers
+// routes
 app.use("/recipes", require('./server/controllers/recipeController'));
 
-app.get('/', (req,res) => {
-    res.render('home');
-});
+//db connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true})
+    .then(() => console.log('DB connected'))
+    .catch(err => console.error(err));
 
-app.get('*', (req, res) => {
-    res.status(404).render('error404');
-})
+const PORT = process.env.PORT || 5050;
 
 app.listen(port, () => console.log(`listening on port ${port}`));
