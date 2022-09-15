@@ -3,9 +3,9 @@ const Recipe = require("../models/recipes");
 
 exports.getAllRecipes = async(req, res) => {
     try {
-        const recipes = await Recipe.find()
+        const recipe = await Recipe.find()
 
-        res.json(recipes)
+        res.json(recipe)
     } catch (error) {
         res.status(500).json({ "message": String(error) })
     }
@@ -56,7 +56,7 @@ exports.updateRecipe = async(req, res) => {
         const { id } = req.params 
 
         const recipe = await Recipe.findById(id)
-        recipe.newRecipe.push(RecipeId)
+        recipe.newRecipe.push(recipeId)
         let updatedRecipe = await Recipe.findByIdAndUpdate(id, recipe)
 
         res.send(updatedRecipe)
