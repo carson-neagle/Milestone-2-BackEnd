@@ -1,4 +1,4 @@
-const db = require("../models/Recipes");
+const db = require("../models/recipes");
 require("../models/database");
 exports.insertIngredientData = async (req, res) => {
   try {

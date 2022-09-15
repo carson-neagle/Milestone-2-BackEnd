@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.use("/recipes", require('./server/controllers/recipeController'));
+const routes = require('./server/routes/recipeRoutes')
+app.use("/recipes", routes);
 
 //db connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true})

@@ -1,10 +1,9 @@
-const router = require("express").Router();
 const Recipe = require("../models/recipes");
 
 
-exports.homepage = async (req, res) => {
+exports.getAllRecipes = async(req, res) => {
     try {
-        const recipes = await Recipe.find().populate('recipes')
+        const recipes = await Recipe.find()
 
         res.json(recipes)
     } catch (error) {
@@ -66,4 +65,3 @@ exports.updateRecipe = async(req, res) => {
     }
 }
 
-module.exports = router;
