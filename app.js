@@ -1,6 +1,7 @@
 //Dependencies
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 
 //Initialize the app object
@@ -10,6 +11,7 @@ const port = process.env.PORT || 5050;
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // routes
 const routes = require('./server/routes/recipeRoutes')
